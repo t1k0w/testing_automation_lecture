@@ -9,81 +9,102 @@ describe("Juice-shop scenarios", () => {
     });
 
     it("Login", () => {
-      // Click Account button
-      // Click Login button
-      // Set email value to "demo"
-      // Set password value to "demo"
-      // Click Log in
-      // Click Account button
-      // Validate that "demo" account name appears in the menu section
+      HomePage.visit();
+      HomePage.clickAccountButton();
+      HomePage.clickLoginMenu();
+      HomePage.loginPage('demo', 'demo');
+      HomePage.goToUserProfile();
+
     });
 
     it("Registration", () => {
-      // Click Account button
-      // Login button
-      // Click "Not yet a customer?"
-      // Find - how to generate random number in JS
-      // Use that number to genarate unique email address, e.g.: email_7584@ebox.com
-      // Save that email address to some variable
-      // Fill in password field and repeat password field with same password
-      // Click on Security Question menu
-      // Select  "Name of your favorite pet?"
-      // Fill in answer
-      // Click Register button
-      // Set email value to previously created email
-      // Set password value to previously used password value
-      // Click login button
-      // Click Account button
-      // Validate that account name (with previously created email address) appears in the menu section
+      HomePage.visit();
+      HomePage.meWantItButton.click();
+      HomePage.clickAccountButton();
+      HomePage.clickLoginMenu();
+      cy.get('a').contains('Not yet a customer?').click();
+      HomePage.login("demo@demo.com","demo123");
+      // cy.get('[aria-label="Selection list for the security question"]').click();
+      HomePage.clickSecurityQuestionDropdown();
+      HomePage.selectSecurityQuestion('Name of your favorite pet?');
+      // Select a security question
+      //cy.contains('mat-option', 'Name of your favorite pet?').click();
+      //cy.get('input[name="securityAnswer"]').type('Fluffy');
+
+      // Submit the registration form
+      //cy.get('button').contains('Register').click();
+      HomePage.fillSecurityAnswer('Fluffy');
+      HomePage.submitRegistration();
     });
   });
 
   context("With auto login", () => {
     beforeEach(() => {
       cy.login("demo", "demo");
-      HomePage.visit();
     });
 
     it("Search and validate Lemon", () => {
-      // Click on search icon
-      // Search for Lemon
-      // Select a product card - Lemon Juice (500ml)
-      // Validate that the card (should) contains "Sour but full of vitamins."
+      HomePage.visit();
+      HomePage.clickSearchIcon();
+      HomePage.searchForProduct("Lemon");
+      HomePage.clickOnProductImage("Lemon Juice (500ml)");
+      //HomePage.validateProductDescription("Lemon Juice (500ml)", "Sour but full of vitamins.");
+      HomePage.checkProductNameVisibility('Lemon Juice (500ml)');
+      HomePage.checkProductDescriptionVisibility('Sour but full of vitamins.');
+      HomePage.visit();
+
     });
 
-    // Create scenario - Search 500ml and validate Lemon, while having multiple cards
-    // Click on search icon
-    // Search for 500ml
-    // Select a product card - Lemon Juice (500ml)
-    // Validate that the card (should) contains "Sour but full of vitamins."
+    it("Search 500ml and validate Lemon", () => {
+      HomePage.clickSearchIcon();
+      HomePage.searchForProduct("500ml");
+      HomePage.clickOnProductImage("Lemon Juice (500ml)");
+      HomePage.checkProductNameVisibility('Lemon Juice (500ml)');
+      HomePage.checkProductDescriptionVisibility('Sour but full of vitamins.');
+      HomePage.visit();
+    });
 
-    // Create scenario - Search 500ml and validate cards
-    // Click on search icon
-    // Search for 500ml
-    // Select a product card - Eggfruit Juice (500ml)
-    // Validate that the card (should) contains "Now with even more exotic flavour."
-    // Close the card
-    // Select a product card - Lemon Juice (500ml)
-    // Validate that the card (should) contains "Sour but full of vitamins."
-    // Close the card
-    // Select a product card - Strawberry Juice (500ml)
-    // Validate that the card (should) contains "Sweet & tasty!"
 
-    // Create scenario - Read a review
-    // Click on search icon
-    // Search for King
-    // Select a product card - OWASP Juice Shop "King of the Hill" Facemask
-    // Click expand reviews button/icon (wait for reviews to appear)
-    // Validate review - K33p5 y0ur ju1cy 5plu773r 70 y0ur53lf!
+    it("Search 500ml and validate cards", () => {
+      HomePage.clickSearchIcon();
+      HomePage.searchForProduct("500ml");
+      HomePage.clickOnProductImage("Eggfruit Juice (500ml)");
+      HomePage.checkProductDescriptionVisibility('Now with even more exotic flavour.');
+      HomePage.closeProductDetailsDialog();
+      HomePage.clickOnProductImage("Lemon Juice (500ml)");
+      HomePage.checkProductDescriptionVisibility('Sour but full of vitamins.');
+      HomePage.closeProductDetailsDialog();
+      HomePage.clickOnProductImage("Strawberry Juice (500ml)");
+      HomePage.checkProductDescriptionVisibility('Sweet & tasty!');
+      HomePage.visit();
+    });
 
-    // Create scenario - Add a review
-    // Click on search icon
-    // Search for Raspberry
-    // Select a product card - Raspberry Juice (1000ml)
-    // Type in review - "Tastes like metal"
-    // Click Submit
-    // Click expand reviews button/icon (wait for reviews to appear)
-    // Validate review -  "Tastes like metal"
+    it("Read a review", () => {
+      HomePage.clickSearchIcon();
+      HomePage.searchForProduct("King");
+      HomePage.clickOnProductImage2('OWASP Juice Shop "King of the Hill" Facemask');
+      HomePage.openReviews();
+      HomePage.visit();
+    });
+
+    it("Add a review", () => {
+      HomePage.clickSearchIcon();
+      HomePage.searchForProduct("Raspberry");
+      HomePage.clickOnProductImage2('Raspberry Juice (1000ml)');
+      HomePage.openReviews();
+      HomePage.typeReview("Tastes like metal");
+      HomePage.openReviews();
+      HomePage.submitReview();
+      HomePage.visit();
+      
+    });
+
+    it.only("Validate product card amount", () => {
+      HomePage.visit();
+      
+    });
+  });
+
 
     // Create scenario - Validate product card amount
     // Validate that the default amount of cards is 12
@@ -136,5 +157,4 @@ describe("Juice-shop scenarios", () => {
     // Set expiry year to 2090
     // Click Submit button
     // Validate that the card shows up in the list
-  });
 });
