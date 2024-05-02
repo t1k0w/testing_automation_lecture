@@ -99,58 +99,56 @@ describe("Juice-shop scenarios", () => {
       
     });
 
-    it.only("Validate product card amount", () => {
+    it("Validate product card amount", () => {
       HomePage.visit();
-      
+      HomePage.validateProductCardAmount('12');
+      HomePage.selectDropdownOption('24')
+      HomePage.validateProductCardAmount('24');
+      HomePage.selectDropdownOption('36')
+      HomePage.validateProductCardAmount('36');
     });
+
+
+    it("Buy Girlie T-shirt", () => {
+      HomePage.visit();
+      HomePage.clickSearchIcon();
+      HomePage.searchForProduct("Girlie");
+      HomePage.addToTheBasket();
+      HomePage.goToBasketPage();
+      HomePage.checkoutButton();
+      HomePage.adressSubmition();
+      HomePage.continueButtonToPayment();
+      HomePage.selectDeliveryMethod('Standard Delivery');
+      HomePage.continueButtonToDelivery();
+      HomePage.clickCardAndRadio();
+      HomePage.continueButtonToReview();
+      HomePage.continueButtonToFinishPayment();
+      HomePage.validateConfirmationOfOrder();
+    });
+
+    it("Add address", () => {
+      HomePage.visit();
+      HomePage.clickAccountButton();
+      HomePage.goToPrivacyAddressSetings();
+      HomePage.clickAddNewAddressButton();
+      HomePage.clickAddNewAddress('CountryName', 'John Doe', '1234567890', '12345', '123 Main St', 'CityName', 'StateName');
+      HomePage.submitReview();
+    });
+
+
+    it.only("Add payment option", () => {
+      HomePage.visit();
+      HomePage.clickAccountButton();
+      HomePage.goToPrivacyPaymentsSetings();
+      HomePage.clickAddNewCard();
+      cy.get('mat-expansion-panel-body.ng-tns-c41-74 mat-form-field').eq(0).find('input[type="text"]').click();
+
+
+
+    });
+    
   });
-
-
-    // Create scenario - Validate product card amount
-    // Validate that the default amount of cards is 12
-    // Change items per page (at the bottom of page) to 24
-    // Validate that the amount of cards is 24
-    // Change items per page (at the bottom of page) to 36
-    // Validate that the amount of cards is 35
-
-    // Create scenario - Buy Girlie T-shirt
-    // Click on search icon
-    // Search for Girlie
-    // Add to basket "Girlie"
-    // Click on "Your Basket" button
-    // Create page object - BasketPage
-    // Click on "Checkout" button
-    // Create page object - SelectAddressPage
-    // Select address containing "United Fakedom"
-    // Click Continue button
-    // Create page object - DeliveryMethodPage
-    // Select delivery speed Standard Delivery
-    // Click Continue button
-    // Create page object - PaymentOptionsPage
-    // Select card that ends with "5678"
-    // Click Continue button
-    // Create page object - OrderSummaryPage
-    // Click on "Place your order and pay"
-    // Create page object - OrderCompletionPage
-    // Validate confirmation - "Thank you for your purchase!"
-
-    // Create scenario - Add address
-    // Click on Account
-    // Click on Orders & Payment
-    // Click on My saved addresses
-    // Create page object - SavedAddressesPage
-    // Click on Add New Address
-    // Create page object - CreateAddressPage
-    // Fill in the necessary information
-    // Click Submit button
-    // Validate that previously added address is visible
-
-    // Create scenario - Add payment option
-    // Click on Account
-    // Click on Orders & Payment
-    // Click on My payment options
-    // Create page object - SavedPaymentMethodsPage
-    // Click Add new card
+    
     // Fill in Name
     // Fill in Card Number
     // Set expiry month to 7

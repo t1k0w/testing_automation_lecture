@@ -119,4 +119,82 @@ export class HomePage extends BasePage {
       .click();
   }
 
+  static validateProductCardAmount(expectedAmount) {
+    cy.get('.mat-select-value-text').should('contain', expectedAmount);
+  }
+  static selectDropdownOption(optionText) {
+    cy.get('.mat-select-arrow').click();
+    cy.contains('.mat-option-text', optionText).click();
+  }
+
+  static addToTheBasket(){
+    cy.get('[aria-label="Add to Basket"]').click();
+  }
+
+  static goToBasketPage(){
+    cy.get('[aria-label="Show the shopping cart"]').click();
+  }
+
+  static checkoutButton(){
+    cy.get('#checkoutButton').click();
+  }
+
+  static adressSubmition(){
+    cy.get('label.mat-radio-label').click();
+  }
+
+  static continueButtonToPayment(){
+    cy.get('[aria-label="Proceed to payment selection"]').click();
+  }
+  static selectDeliveryMethod(deliveryMethodName) {
+    cy.contains('mat-cell.mat-cell.cdk-cell.cdk-column-Name.mat-column-Name', deliveryMethodName).click();
+  }
+  static continueButtonToDelivery(){
+    cy.get('[aria-label="Proceed to delivery method selection"]').click();
+  }
+
+  static clickCardAndRadio() {
+    cy.get('.mat-row').contains('5678').click().then(() => {
+      cy.get('.mat-radio-inner-circle').click();
+    });
+  }
+  static continueButtonToReview(){
+    cy.get('[aria-label="Proceed to review"]').click();
+  } 
+
+  static continueButtonToFinishPayment(){
+    cy.get('[aria-label="Complete your purchase"]').click();
+  } 
+
+  static validateConfirmationOfOrder(){
+      cy.contains('.confirmation', 'Thank you for your purchase!').should('be.visible');
+  }
+
+  static goToPrivacyAddressSetings() {
+    cy.get('button[aria-label="Show Orders and Payment Menu"]').click();
+    cy.get('button[aria-label="Go to saved address page"]').click();
+  }
+
+  static clickAddNewAddressButton() {
+    cy.get('button[aria-label="Add a new address"]').click();
+  }
+
+  static clickAddNewAddress(country, name, mobileNumber, zipCode, address, city, state){
+      cy.get('input[placeholder="Please provide a country."]').type(country);
+      cy.get('input[placeholder="Please provide a name."]').type(name);
+      cy.get('input[placeholder="Please provide a mobile number."]').type(mobileNumber);
+      cy.get('input[placeholder="Please provide a ZIP code."]').type(zipCode);
+      cy.get('textarea[placeholder="Please provide an address."]').type(address);
+      cy.get('input[placeholder="Please provide a city."]').type(city);
+      cy.get('input[placeholder="Please provide a state."]').type(state);
+  }
+
+  static goToPrivacyPaymentsSetings() {
+    cy.get('button[aria-label="Show Orders and Payment Menu"]').click();
+    cy.get('button[aria-label="Go to saved payment methods page"]').click();
+  }
+
+  static clickAddNewCard() {
+    cy.get('mat-expansion-panel-header[aria-expanded="false"] mat-panel-title').contains('Add new card').click();
+  }
 }
