@@ -142,17 +142,15 @@ describe("Juice-shop scenarios", () => {
       HomePage.goToPrivacyPaymentsSetings();
       HomePage.clickAddNewCard();
       cy.get("#mat-input-29").should("be.visible").click().type("John Doe");
-
-      
-
-    });
-    
-  });
-    
     // Fill in Name
     // Fill in Card Number
     // Set expiry month to 7
     // Set expiry year to 2090
     // Click Submit button
-    // Validate that the card shows up in the list
+    // Validate that the card shows up in the list  
+      
+
+    });
+    
+  });
 });
