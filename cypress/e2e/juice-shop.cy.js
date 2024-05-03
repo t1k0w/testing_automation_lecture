@@ -141,9 +141,9 @@ describe("Juice-shop scenarios", () => {
       HomePage.clickAccountButton();
       HomePage.goToPrivacyPaymentsSetings();
       HomePage.clickAddNewCard();
-      cy.get('mat-expansion-panel-body.ng-tns-c41-74 mat-form-field').eq(0).find('input[type="text"]').click();
+      cy.get("#mat-input-29").should("be.visible").click().type("John Doe");
 
-
+      
 
     });
     
