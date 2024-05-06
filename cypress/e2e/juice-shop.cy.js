@@ -1,4 +1,5 @@
 import { HomePage } from "../pageObjects/HomePage";
+import { PaymentMethods } from "../pageObjects/PaymentsMethodPage";
 
 describe("Juice-shop scenarios", () => {
   context("Without auto login", () => {
@@ -140,16 +141,14 @@ describe("Juice-shop scenarios", () => {
       HomePage.visit();
       HomePage.clickAccountButton();
       HomePage.goToPrivacyPaymentsSetings();
-      HomePage.clickAddNewCard();
-      cy.get("#mat-input-29").should("be.visible").click().type("John Doe");
-    // Fill in Name
-    // Fill in Card Number
-    // Set expiry month to 7
-    // Set expiry year to 2090
-    // Click Submit button
-    // Validate that the card shows up in the list  
+      PaymentMethods.addNewCardBtn.click();
+      PaymentMethods.nameTxtField.type("Name Surname");
+      PaymentMethods.cardNumberTxtField.type("1111222233334444");
+      PaymentMethods.exipreMonthTxtField.select("6");
+      PaymentMethods.exipreYearTxtField.select("2090");
+      PaymentMethods.submitBtn.click();
+      PaymentMethods.paymentCardlist.contains("4444");
       
-
     });
     
   });

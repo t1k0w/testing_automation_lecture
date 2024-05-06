@@ -195,6 +195,6 @@ export class HomePage extends BasePage {
   }
 
   static clickAddNewCard() {
-    cy.get('mat-expansion-panel-header[aria-expanded="false"] mat-panel-title').contains('Add new card').click();
+    return cy.get('mat-expansion-panel');
   }
 }
